@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Add Parking Lot | Nexlot{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h2 class="mb-4 text-center" style="font-family: 'Outfit', sans-serif;">Add New Parking Lot</h2>
+          <form method="POST">
+            <div class="mb-3">
+              <label class="form-label">Location</label>
+              <input name="location" type="text" class="form-control" placeholder="Enter Location" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Address</label>
+              <input name="address" type="text" class="form-control" placeholder="Enter the Address" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Pin Code</label>
+              <input name="pin_code" type="text" class="form-control" placeholder="Enter the Pin Code" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Price Per Hour</label>
+              <input name="price_per_hour" type="text" class="form-control" placeholder="Enter the Price Per Hour" required>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Maximum Spots</label>
+              <input name="max_spots" type="text" class="form-control" placeholder="Enter Maximum Spots" required>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary" style="background-color: #6C40FB; border: none;">
+                Add Parking Lot
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
