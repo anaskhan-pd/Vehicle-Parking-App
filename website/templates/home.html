@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Search Parking Lots | Nexlot{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <h2 class="mb-4 text-center" style="font-family: 'Outfit', sans-serif;">Available Parking Lots</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- 🔍 Search Form -->
+  <form method="GET" action="{{ url_for('views.home') }}" class="mb-4">
+    <div class="input-group shadow-sm">
+      <input type="text" name="query" class="form-control rounded-start"
+             placeholder="Search by location or pin code"
+             value="{{ request.args.get('query', '') }}" required>
+      <button class="btn btn-primary px-4" style="background-color: #6C40FB;" type="submit">
+        Search
+      </button>
+    </div>
+  </form>
+
+  {% if lots %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Address</th>
+            <th>Pin Code</th>
+            <th>Book</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lot in lots %}
+          <tr>
+            <td>{{ lot.id }}</td>
+            <td>{{ lot.location }}</td>
+            <td>{{ lot.address }}</td>
+            <td>{{ lot.pin_code }}</td>
+            <td>
+              <a href="{{ url_for('views.book_spot', lot_id=lot.id) }}" class="btn btn-sm btn-primary">
+                Book
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-center text-muted">No parking lots found.</p>
+  {% endif %}
+
+</div>
+{% endblock %}
