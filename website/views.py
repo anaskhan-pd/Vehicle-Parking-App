@@ -6,9 +6,9 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET'])
 def home():
-    if User.id not in session:
+    if 'user_id' not in session:
         return redirect(url_for('auth.login'))
-    
+
     query = request.args.get('query')
     if query:
         lots = ParkingLot.query.filter(
@@ -19,9 +19,10 @@ def home():
         ).all()
     else:
         lots = ParkingLot.query.all()
-    
-    
-    return render_template('home.html', lots=lots)
+
+    return render_template('available_lots.html', lots=lots)
+
+
 
 
 @views.route('/admin/add-lot', methods=['GET', 'POST'])
@@ -200,3 +201,22 @@ def view_users():
     
     users = User.query.all()
     return render_template('users.html', users=users)
+
+@views.route('/user/available-lots')
+def available_lots():
+    if 'user_id' not in session:
+        flash("Please log in first", "warning")
+        return redirect(url_for('auth.login'))
+
+    query = request.args.get('query')
+    if query:
+        lots = ParkingLot.query.filter(
+            or_(
+                ParkingLot.location.ilike(f'%{query}%'),
+                ParkingLot.pin_code.ilike(f'%{query}%')
+            )
+        ).all()
+    else:
+        lots = ParkingLot.query.all()
+
+    return render_template('available_lots.html', lots=lots)
