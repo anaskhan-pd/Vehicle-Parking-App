@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Parking Lot {{ lot.location }} | Nexlot{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+          <h2 class="mb-4 text-center" style="font-family: 'Outfit', sans-serif;">
+            Parking Lot - {{ lot.location }} (ID: {{ lot.id }})
+          </h2>
+
+          <table class="table table-bordered table-striped mt-4">
+            <thead class="table-dark text-center">
+              <tr>
+                <th>Spot ID</th>
+                <th>Status</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              {% for spot in spots %}
+              <tr>
+                <td>{{ spot.id }}</td>
+                <td>
+                  {% if spot.status == "A" %}
+                    <span class="badge bg-success px-3 py-2">Available</span>
+                  {% else %}
+                    <span class="badge bg-danger px-3 py-2">Occupied</span>
+                  {% endif %}
+                </td>
+                <td>{{ spot.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <div class="text-center mt-4">
+            <a href="{{ url_for('views.dashboard') }}" class="btn btn-outline-dark px-4">Back to Dashboard</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
