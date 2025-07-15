@@ -13,16 +13,16 @@ def register():
         address = request.form.get('address')
         pin_code = request.form.get('pin_code')
 
-        # Check if email already exists
+        
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash("Email already exists", 'error')
             return redirect(url_for('auth.register'))
 
-        # Hash password
+        
         hashed_password = generate_password_hash(password)
 
-        # Create user
+        
         new_user = User(
             email=email,
             name=name,
